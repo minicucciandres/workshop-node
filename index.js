@@ -1,14 +1,15 @@
 //defino el server
 const express = require("express")
 const app = express();
+const path = require("path");
 const expressLayouts = require('express-ejs-layouts');
 const methodOverride = require("method-override");
 
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 //configurando ejs para las vistas 1°
 app.set("view engine","ejs");
-app.set('views', './src/views');
+app.set("views", path.join(__dirname,"/src/views"));
 //
 
 //configurando layout 2°. la ruta especidifcada la toma a aprtir de la ruta view.
