@@ -2,19 +2,27 @@
 const express = require("express")
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
+const methodOverride = require("method-override");
 
 app.use(express.static("public"));
 
-//configurando ejs para las vistas
+//configurando ejs para las vistas 1°
 app.set("view engine","ejs");
 app.set('views', './src/views');
 //
 
-
+//configurando layout 2°. la ruta especidifcada la toma a aprtir de la ruta view.
+//si no configuro ninguna ruta asume que esta suelto dentro de views
 app.use(expressLayouts);
 app.set('layout', 'layouts/layout');
+//
 
-app.use(require('./src/routers/tareasRouter'))
+//este middleware permite acceder a los datos enviados
+//en un post a travez del objeto req.body. 
+app.use(express.urlencoded({ extended:false}));
+app.use(methodOverride("_method"));
+
+app.use(require('./src/routers/tareasRouter'));
 
 const PORT=3000;
 
